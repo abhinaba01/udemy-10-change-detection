@@ -14,6 +14,6 @@ export class MessagesService {
 
   addMessage(message: string) {
     this.messages = [...this.messages, message];
-    this.message$.next(this.messages)
+    this.message$.next(this.messages) // this is used to emit the messages array  using the Behaviour Subject
   }
 }

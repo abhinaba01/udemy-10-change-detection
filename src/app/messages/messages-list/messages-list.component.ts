@@ -1,8 +1,10 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, input } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, inject, input } from '@angular/core';
 import { MessagesService } from '../messages.service';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-messages-list',
+  imports:[AsyncPipe],
   standalone: true,
   templateUrl: './messages-list.component.html',
   styleUrl: './messages-list.component.css',
@@ -10,16 +12,25 @@ import { MessagesService } from '../messages.service';
 })
 export class MessagesListComponent {
  private messageService = inject(MessagesService)
- private cdRef = inject(ChangeDetectorRef);
+//  private cdRef = inject(ChangeDetectorRef);
+//  private destroyRef = inject(DestroyRef)
 
- messages: string[]=[];
+ message$ = this.messageService.message$
 
- ngOnInit(){
-  this.messageService.message$.subscribe((messages)=>{
-    this.messages=messages
-    this.cdRef.markForCheck();
-  });
- }
+// messages: string[]=[];
+
+//  ngOnInit(){
+//    const subscription = this.messageService.message$.subscribe((messages)=>{
+//     this.messages=messages
+//     this.cdRef.markForCheck();
+//   });
+
+//   this.destroyRef.onDestroy(()=>{
+//     subscription.unsubscribe()
+//   })
+
+
+// }
  
 
  
